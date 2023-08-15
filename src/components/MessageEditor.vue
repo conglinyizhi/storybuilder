@@ -29,8 +29,12 @@ const messageArray = ref([{ text: '' }]);
 // const data = reactive({ { "conglinyizhi": "小丛林", "redrain": "红雨", "dreampowery": "梦境引擎" } });
 const dataArray = [
   '小丛林',
-  '红雨',
-  '梦境引擎'
+  '红色雨夜',
+  '梦境引擎',
+  '花语之鹿',
+  '纳西妲', 
+  '提纳里',
+  '派蒙'
 ]
 
 const select = ref(-1)
@@ -66,22 +70,17 @@ const inputEnter = () => {
 
 // 当前只做了顺序编写的逻辑，只是操作后面的符号，已经固定的暂时不做处理
 // 如果当前编辑框中只有一个 @ 符号，那么直接删掉这个成员
+// TODO 通过 keydown 函数判断用户所在的光标位置
+// event.target.selectionStart
 const pushPeopleTag = (id) => {
-  if (messageArray.value[messageArray.value.length - 1].text === "@") {
+  const lastMessage = messageArray.value[messageArray.value.length - 1];
+  if (lastMessage.text === "@") {
     messageArray.value.pop();
-  } else {
-    // 如果文本末尾包括了一个 @ 符号，那么直接删掉末尾的 @ 符号
-    if (messageArray.value[messageArray.value.length - 1].text.charAt(messageArray.value[messageArray.value.length - 1].text.length - 1) == '@') {
-      messageArray.value[messageArray.value.length - 1].text = messageArray.value[messageArray.value.length - 1].text.slice(0, -1);
-    }
+  } else if (lastMessage.text.endsWith('@')) {
+    lastMessage.text = lastMessage.text.slice(0, -1);
   }
-  messageArray.value.push({ type: 'tag', tag: id });
-  messageArray.value.push({ text: '' });
-  // 将用户的焦点通过原生 dom 方法移动，这种方式不可靠，暂时不使用
-  // setTimeout(() => {
-  //   document.querySelector(`input[data-id=${messageArray.value.length - 1}]`).focus()
-  // }, 500);
-  // messageArray.value.length - 1
+  // 该方法未来可以用到从某个元素中间插入两个元素的情况
+  messageArray.value = messageArray.value.concat([{ type: 'tag', tag: id }, { text: '' }])
 };
 
 </script>
@@ -118,4 +117,5 @@ const pushPeopleTag = (id) => {
       background: darkcyan;
     }
   }
-}</style>
+}
+</style>
