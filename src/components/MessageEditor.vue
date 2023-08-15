@@ -2,9 +2,10 @@
   <div>
     <v-chip prepend-icon="" v-text="'ChangeName'" />
   </div>
-  <div class="editInput" v-for="(message,index) in messageArray" :key="message">
+  <div class="editInput" v-for="(message, index) in messageArray" :key="message">
     <span :data-id="index" class="tag" v-if="message.type == 'tag'" v-text="dataArray[message.tag]"></span>
-    <input :data-id="index" class="edit" type="text" v-model="message.text" @keyup.enter="inputEnter" @input="inputText" @keydown="changeSelect" v-else>
+    <input :data-id="index" class="edit" type="text" v-model="message.text" @keyup.enter="inputEnter" @input="inputText"
+      @keydown="changeSelect" v-else>
   </div>
   <button @click="sendMessage">发送</button>
   <div class="editPeopleList" v-show="select > -1">
@@ -24,7 +25,7 @@ import { ref, reactive } from 'vue';
 
 const emit = defineEmits(['sendMessage']);
 
-const messageArray = ref([{text:''}]);
+const messageArray = ref([{ text: '' }]);
 // const data = reactive({ { "conglinyizhi": "小丛林", "redrain": "红雨", "dreampowery": "梦境引擎" } });
 const dataArray = [
   '小丛林',
@@ -40,27 +41,26 @@ const sendMessage = () => {
 
 // 检测用户输入 @ 后启动角色选择列表
 const inputText = (event) => {
-  if(event.data == '@'){
+  if (event.data == '@') {
     select.value = 0
   }
 }
 // 启动角色选择列表后，用来移动光标
 const changeSelect = (event) => {
   console.log(event)
-  if(event.key == 'ArrowUp' && select.value > 0){
+  if (event.key == 'ArrowUp' && select.value > 0) {
     select.value--
   }
-  if(event.key == 'ArrowDown' && select.value < dataArray.length - 1){
+  if (event.key == 'ArrowDown' && select.value < dataArray.length - 1) {
     select.value++
   }
 }
 
 // 按下回车后，如果光标有选择，那么插入一个角色的 Tag，否则忽略
 const inputEnter = () => {
-  if(select.value > -1){
+  if (select.value > -1) {
     pushPeopleTag(select.value)
     select.value = -1
-    
   }
 };
 
@@ -69,9 +69,9 @@ const inputEnter = () => {
 const pushPeopleTag = (id) => {
   if (messageArray.value[messageArray.value.length - 1].text === "@") {
     messageArray.value.pop();
-  }else{
+  } else {
     // 如果文本末尾包括了一个 @ 符号，那么直接删掉末尾的 @ 符号
-    if(messageArray.value[messageArray.value.length - 1].text.charAt(messageArray.value[messageArray.value.length - 1].text.length - 1) == '@'){
+    if (messageArray.value[messageArray.value.length - 1].text.charAt(messageArray.value[messageArray.value.length - 1].text.length - 1) == '@') {
       messageArray.value[messageArray.value.length - 1].text = messageArray.value[messageArray.value.length - 1].text.slice(0, -1);
     }
   }
@@ -81,7 +81,7 @@ const pushPeopleTag = (id) => {
   // setTimeout(() => {
   //   document.querySelector(`input[data-id=${messageArray.value.length - 1}]`).focus()
   // }, 500);
-    // messageArray.value.length - 1
+  // messageArray.value.length - 1
 };
 
 </script>
@@ -106,14 +106,16 @@ const pushPeopleTag = (id) => {
   }
 }
 
-.editPeopleList{
+.editPeopleList {
   background: darkblue;
-  .item{
+
+  .item {
     font-size: 1.4rem;
     padding: 1rem;
-    &.select,&:hover{
+
+    &.select,
+    &:hover {
       background: darkcyan;
     }
   }
-}
-</style>
+}</style>

@@ -11,7 +11,7 @@
 
     <v-main>
       <v-container>
-        <message-editor @send-message="sendMessageTest"/>
+        <message-editor @send-message="sendMessageTest" />
       </v-container>
     </v-main>
   </v-app>
@@ -28,6 +28,6 @@ const hideDrawer = () => {
 }
 
 const sendMessageTest = (data) => {
-  console.log('pushMessageTest',data);
+  console.log('pushMessageTest', data);
 }
 </script>
