@@ -1,22 +1,31 @@
 <template>
-  <div>
-    <v-chip prepend-icon="" v-text="'ChangeName'" />
+  <div v-if="!changeTalker">
+    当前发言角色：{{ dataArray[talkerId].name }} <v-btn @click="changeTalker = true">更换发言角色</v-btn>
+  </div>
+  <div v-else>
+    请选择发言对象：<v-btn v-for="(talker, index) in dataArray" @click="changeTalkerOnClick(index)">{{ talker.name }} - {{ index }}</v-btn>
+    <div>或者，尝试 <v-btn @click="newPeopleDialogShow = true">添加一个角色</v-btn></div>
+    <div v-show="newPeopleDialogShow">
+      <v-text-field variant="filled" label="角色名称" v-model="newPeopleInputText"></v-text-field>
+      <v-btn color="primary" @click="addPeople">确认添加角色</v-btn>
+    </div>
   </div>
   <div class="editInput" v-for="(message, index) in messageArray" :key="message">
-    <span :data-id="index" class="tag" v-if="message.type == 'tag'" v-text="dataArray[message.tag].name"></span>
+    <span :data-id="index" class="tag" v-if="message.type == 'tag'">{{ dataArray[message.tag].name }}</span>
     <input :data-id="index" class="edit" type="text" v-model="message.text" @keyup.enter="inputEnter" @input="inputText"
       @keydown="changeSelect" v-else>
   </div>
-  <button @click="sendMessage">发送</button>
+  <v-btn @click="sendMessage">发送</v-btn>
   <div class="editPeopleList" v-show="select > -1">
-    <div class="item" v-for="(people, index) in dataArray" :class="{ 'select': select == index }" v-text="people.name">
+    <div class="item" v-for="(people, index) in dataArray" :class="{ 'select': select == index }">{{ people.name }}
     </div>
   </div>
   <div style="margin-top: 10rem;">
     内容预览
+    <span v-show="!changeTalker">{{ dataArray[talkerId].name }}：</span>
     <div class="editInput" v-for="message in messageArray" :key="message">
-      <span class="tag" v-if="message.type == 'tag'" v-text="dataArray[message.tag].name"></span>
-      <span class="edit" v-text="message.text" v-else></span>
+      <span class="tag" v-if="message.type == 'tag'">{{ dataArray[message.tag].name }}</span>
+      <span class="edit" v-else>{{ message.text }}</span>
     </div>
   </div>
 </template>
@@ -26,6 +35,9 @@ import { ref, reactive } from 'vue';
 
 const emit = defineEmits(['sendMessage']);
 
+// 定义当前对话的角色id
+const talkerId = ref(0);
+const changeTalker = ref(true);
 const messageArray = ref([{ text: '' }]);
 // const data = reactive({ { "conglinyizhi": "小丛林", "redrain": "红雨", "dreampowery": "梦境引擎" } });
 const dataArray = ref([
@@ -44,6 +56,25 @@ const dataArray = ref([
   }
 }))
 
+const newPeopleDialogShow = ref(false)
+const newPeopleInputText = ref('')
+const addPeople = () => {
+  if(! newPeopleInputText.value.trim()){
+    alert('请给阁下的角色一个名字，好吗')
+  }else{
+    dataArray.value.push({
+      name: newPeopleInputText.value,
+      group: 'default',
+      profile: ''
+    })
+    newPeopleDialogShow.value = false
+    newPeopleInputText.value = ''
+  }
+}
+const changeTalkerOnClick = (i) => {
+  talkerId.value = i
+  changeTalker.value = false
+}
 const select = ref(-1)
 // 将数据传递给父组件
 const sendMessage = () => {
