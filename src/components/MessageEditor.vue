@@ -3,18 +3,19 @@
     <v-chip prepend-icon="" v-text="'ChangeName'" />
   </div>
   <div class="editInput" v-for="(message, index) in messageArray" :key="message">
-    <span :data-id="index" class="tag" v-if="message.type == 'tag'" v-text="dataArray[message.tag]"></span>
+    <span :data-id="index" class="tag" v-if="message.type == 'tag'" v-text="dataArray[message.tag].name"></span>
     <input :data-id="index" class="edit" type="text" v-model="message.text" @keyup.enter="inputEnter" @input="inputText"
       @keydown="changeSelect" v-else>
   </div>
   <button @click="sendMessage">发送</button>
   <div class="editPeopleList" v-show="select > -1">
-    <div class="item" v-for="(people, index) in dataArray" :class="{ 'select': select == index }" v-text="people"></div>
+    <div class="item" v-for="(people, index) in dataArray" :class="{ 'select': select == index }" v-text="people.name">
+    </div>
   </div>
   <div style="margin-top: 10rem;">
     内容预览
     <div class="editInput" v-for="message in messageArray" :key="message">
-      <span class="tag" v-if="message.type == 'tag'" v-text="dataArray[message.tag]"></span>
+      <span class="tag" v-if="message.type == 'tag'" v-text="dataArray[message.tag].name"></span>
       <span class="edit" v-text="message.text" v-else></span>
     </div>
   </div>
@@ -27,15 +28,21 @@ const emit = defineEmits(['sendMessage']);
 
 const messageArray = ref([{ text: '' }]);
 // const data = reactive({ { "conglinyizhi": "小丛林", "redrain": "红雨", "dreampowery": "梦境引擎" } });
-const dataArray = [
+const dataArray = ref([
   '小丛林',
   '红色雨夜',
   '梦境引擎',
   '花语之鹿',
-  '纳西妲', 
+  '纳西妲',
   '提纳里',
   '派蒙'
-]
+].map(name => {
+  return {
+    name,
+    group: 'default',
+    profile: ''
+  }
+}))
 
 const select = ref(-1)
 // 将数据传递给父组件
@@ -52,10 +59,11 @@ const inputText = (event) => {
 // 启动角色选择列表后，用来移动光标
 const changeSelect = (event) => {
   console.log(event)
-  if (event.key == 'ArrowUp' && select.value > 0) {
+  const showSwlectView = select.value > -1
+  if (event.key == 'ArrowUp' && select.value > 0 && showSwlectView) {
     select.value--
   }
-  if (event.key == 'ArrowDown' && select.value < dataArray.length - 1) {
+  if (event.key == 'ArrowDown' && select.value < dataArray.value.length - 1 && showSwlectView) {
     select.value++
   }
 }
