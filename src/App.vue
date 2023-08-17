@@ -12,6 +12,7 @@
     <v-main>
       <v-container>
         <message-editor @send-message="sendMessageTest" />
+        <message-show />
       </v-container>
     </v-main>
   </v-app>
@@ -20,6 +21,7 @@
 <script setup>
 import { ref } from 'vue'
 import MessageEditor from './components/MessageEditor.vue';
+import MessageShow from './components/MessageShow.vue';
 
 const drawer = ref(false)
 
@@ -31,3 +33,24 @@ const sendMessageTest = (data) => {
   console.log('pushMessageTest', data);
 }
 </script>
+
+<style lang="scss">
+.editInput {
+  display: inline-block;
+
+  .tag {
+    padding: 5px;
+    background: darkkhaki;
+    color: black;
+    border-radius: 15px;
+  }
+
+  .edit {
+    border: 1px solid white;
+    border-top: 0;
+    border-left: 0;
+    border-right: 0;
+    min-width: 3rem;
+  }
+}
+</style>

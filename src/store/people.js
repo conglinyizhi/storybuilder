@@ -2,8 +2,10 @@ import { defineStore } from 'pinia'
 import { ref } from 'vue'
 
 export const useTalkConfig = defineStore('talkConfig', function () {
-    const messageArray = ref([{ text: '' }])
-    const messageArrayList = ref([])
+    const messageArray = ref([{ text: '' }]);
+    const messageArrayList = ref([]);
+    const talkerId = ref(0);
+    const select = ref(-1);
     const dataArray = ref(['小丛林', '红色雨夜', '梦境引擎', '花语之鹿', '纳西妲', '提纳里', '派蒙'].map(name => {
         return {
             name,
@@ -11,5 +13,5 @@ export const useTalkConfig = defineStore('talkConfig', function () {
             profile: ''
         }
     }))
-    return { messageArray, dataArray, messageArrayList }
+    return { messageArray, dataArray, talkerId, select, messageArrayList }
 })
