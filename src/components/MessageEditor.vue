@@ -1,15 +1,16 @@
 <template>
   <SelectTalker />
-  <div class="editInput" v-for="(message, iId) in messageArray" :key="message">
+  <!-- <div class="editInput" v-for="(message, iId) in messageArray" :key="message">
     <span :data-id="iId" class="tag" v-if="message.type == 'tag'">{{ dataArray[message.tag].name }}</span>
     <input :data-id="iId" class="edit" type="text" v-model="message.text" @keyup.enter="inputEnter" @input="inputText"
       @keydown="changeSelect" v-else>
   </div>
-  <v-btn @click="sendMessage">发送</v-btn>
+  <v-btn @click="sendMessage">发送</v-btn> -->
   <div class="editPeopleList" v-show="select > -1">
     <div class="item" v-for="(people, iId) in dataArray" :class="{ 'select': select == iId }">{{ people.name }}
     </div>
   </div>
+  <v-text-field :label="getInputLabel()" @input="inputText" @keyup.enter="inputEnter"></v-text-field>
 </template>
 
 <script setup>
@@ -22,6 +23,16 @@ const talkConfig = useTalkConfig()
 
 const { messageArray, dataArray, talkerId, select } = storeToRefs(talkConfig)
 const emit = defineEmits(['sendMessage']);
+
+const messageEditorIndex = ref(0)
+
+const getInputLabel = () => {
+  if(messageEditorIndex.value){
+    return '然后...TA 会说什么呢...'
+  }else{
+    return `你希望 ${dataArray.value[talkerId.value].name} 说...`
+  }
+}
 
 // 将数据传递给父组件
 const sendMessage = () => emit('sendMessage', messageArray.value);
@@ -37,7 +48,7 @@ const changeSelect = (event) => {
   const indexBigerThanZero = select.value > 0
   const indexSmallerThanLength = select.value < dataArray.value.length - 1
   const showSwlectView = select.value > -1
-  console.log(event)
+
   if (isUp && indexBigerThanZero && showSwlectView) {
     select.value--
   }else if (isDown && indexSmallerThanLength && showSwlectView) {
