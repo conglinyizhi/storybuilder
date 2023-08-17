@@ -3,21 +3,22 @@
     当前发言角色：{{ dataArray[talkerId].name }} <v-btn @click="changeTalker = true">更换发言角色</v-btn>
   </div>
   <div v-else>
-    请选择发言对象：<v-btn v-for="(talker, index) in dataArray" @click="changeTalkerOnClick(index)">{{ talker.name }} - {{ index }}</v-btn>
+    请选择发言对象：<v-btn v-for="(talker, iId) in dataArray" @click="changeTalkerOnClick(iId)">{{ talker.name }} - {{ iId
+    }}</v-btn>
     <div>或者，尝试 <v-btn @click="newPeopleDialogShow = true">添加一个角色</v-btn></div>
     <div v-show="newPeopleDialogShow">
       <v-text-field variant="filled" label="角色名称" v-model="newPeopleInputText"></v-text-field>
       <v-btn color="primary" @click="addPeople">确认添加角色</v-btn>
     </div>
   </div>
-  <div class="editInput" v-for="(message, index) in messageArray" :key="message">
-    <span :data-id="index" class="tag" v-if="message.type == 'tag'">{{ dataArray[message.tag].name }}</span>
-    <input :data-id="index" class="edit" type="text" v-model="message.text" @keyup.enter="inputEnter" @input="inputText"
+  <div class="editInput" v-for="(message, iId) in messageArray" :key="message">
+    <span :data-id="iId" class="tag" v-if="message.type == 'tag'">{{ dataArray[message.tag].name }}</span>
+    <input :data-id="iId" class="edit" type="text" v-model="message.text" @keyup.enter="inputEnter" @input="inputText"
       @keydown="changeSelect" v-else>
   </div>
   <v-btn @click="sendMessage">发送</v-btn>
   <div class="editPeopleList" v-show="select > -1">
-    <div class="item" v-for="(people, index) in dataArray" :class="{ 'select': select == index }">{{ people.name }}
+    <div class="item" v-for="(people, iId) in dataArray" :class="{ 'select': select == iId }">{{ people.name }}
     </div>
   </div>
   <div style="margin-top: 10rem;">
@@ -32,36 +33,23 @@
 
 <script setup>
 import { ref, reactive } from 'vue';
+import { useTalkConfig } from '../store/people.js'
+import { storeToRefs } from 'pinia'
 
+const talkConfig = useTalkConfig()
+
+const { messageArray, dataArray } = storeToRefs(talkConfig)
 const emit = defineEmits(['sendMessage']);
 
 // 定义当前对话的角色id
 const talkerId = ref(0);
 const changeTalker = ref(true);
-const messageArray = ref([{ text: '' }]);
-// const data = reactive({ { "conglinyizhi": "小丛林", "redrain": "红雨", "dreampowery": "梦境引擎" } });
-const dataArray = ref([
-  '小丛林',
-  '红色雨夜',
-  '梦境引擎',
-  '花语之鹿',
-  '纳西妲',
-  '提纳里',
-  '派蒙'
-].map(name => {
-  return {
-    name,
-    group: 'default',
-    profile: ''
-  }
-}))
-
 const newPeopleDialogShow = ref(false)
 const newPeopleInputText = ref('')
 const addPeople = () => {
-  if(! newPeopleInputText.value.trim()){
+  if (!newPeopleInputText.value.trim()) {
     alert('请给阁下的角色一个名字，好吗')
-  }else{
+  } else {
     dataArray.value.push({
       name: newPeopleInputText.value,
       group: 'default',
@@ -77,9 +65,7 @@ const changeTalkerOnClick = (i) => {
 }
 const select = ref(-1)
 // 将数据传递给父组件
-const sendMessage = () => {
-  emit('sendMessage', messageArray.value);
-};
+const sendMessage = () => emit('sendMessage', messageArray.value);
 
 // 检测用户输入 @ 后启动角色选择列表
 const inputText = (event) => {
