@@ -7,10 +7,12 @@
   </div>
   <v-btn @click="sendMessage">发送</v-btn> -->
   <div class="editPeopleList" v-show="select > -1">
-    <div class="item" v-for="(people, iId) in dataArray" :class="{ 'select': select == iId }">{{ people.name }}
+    <div class="item" v-for="(people, iId) in dataArray" :class="{ 'select': select == iId }" @click="pushPeopleTag(iId)">
+      {{ people.name }}
     </div>
   </div>
-  <v-text-field :label="getInputLabel()" @input="inputText" @keyup.enter="inputEnter"></v-text-field>
+  <v-text-field class="input" :label="getLabel()" @input="input" @keyup.enter="enter" @keydown="key" v-model="messageArray[messageArrayIndex]">
+  </v-text-field>
 </template>
 
 <script setup>
@@ -21,28 +23,24 @@ import { storeToRefs } from 'pinia'
 
 const talkConfig = useTalkConfig()
 
-const { messageArray, dataArray, talkerId, select } = storeToRefs(talkConfig)
-const emit = defineEmits(['sendMessage']);
+const { messageArray, dataArray, talkerId, select, messageArrayIndex } = storeToRefs(talkConfig)
 
 const messageEditorIndex = ref(0)
 
-const getInputLabel = () => {
-  if(messageEditorIndex.value){
+const getLabel = () => {
+  if (messageEditorIndex.value) {
     return '然后...TA 会说什么呢...'
-  }else{
+  } else {
     return `你希望 ${dataArray.value[talkerId.value].name} 说...`
   }
 }
 
-// 将数据传递给父组件
-const sendMessage = () => emit('sendMessage', messageArray.value);
-
 // 检测用户输入 @ 后启动角色选择列表
-const inputText = (event) => {
-  if (event.data == '@') select.value = 0
+const input = (event) => {
+  if (event.data == '@') select.value = 1
 }
 // 启动角色选择列表后，用来移动光标
-const changeSelect = (event) => {
+const key = (event) => {
   const isUp = event.key == 'ArrowUp'
   const isDown = event.key == 'ArrowDown'
   const indexBigerThanZero = select.value > 0
@@ -51,14 +49,17 @@ const changeSelect = (event) => {
 
   if (isUp && indexBigerThanZero && showSwlectView) {
     select.value--
-  }else if (isDown && indexSmallerThanLength && showSwlectView) {
+  } else if (isDown && indexSmallerThanLength && showSwlectView) {
     select.value++
   }
 }
 
-// 按下回车后，如果光标有选择，那么插入一个角色的 Tag，否则忽略
-const inputEnter = () => {
-  if (select.value > -1) pushPeopleTag(select.value)
+const enter = () => {
+  if (selectedValue === 0) {
+    selectedValue = -1;
+  } else if (selectedValue > -1) {
+    pushPeopleTag(selectedValue);
+  }
 };
 
 // 当前只做了顺序编写的逻辑，只是操作后面的符号，已经固定的暂时不做处理
@@ -66,6 +67,9 @@ const inputEnter = () => {
 // TODO 通过 keydown 函数判断用户所在的光标位置
 // event.target.selectionStart
 const pushPeopleTag = (id) => {
+  if (''.matchAll(/\@/).length > 1) {
+    console.log('@ 数量大于1,暂时选用末尾的 @ 符号进行替换');
+  }
   const lastMessage = messageArray.value[messageArray.value.length - 1];
   if (lastMessage.text === "@") {
     messageArray.value.pop();
@@ -85,12 +89,15 @@ const pushPeopleTag = (id) => {
   background: darkblue;
 
   .item {
-    font-size: 1.4rem;
-    padding: 1rem;
+    font-size: 1.2rem;
+    padding: 0.5rem;
 
-    &.select,
-    &:hover {
+    &.select {
       background: darkcyan;
+    }
+
+    &:hover {
+      background: aqua;
     }
   }
 }
