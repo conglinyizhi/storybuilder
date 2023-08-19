@@ -5,7 +5,7 @@
 
 <script setup>
 import { ref } from 'vue';
-import { useTalkConfig } from '../store/people.js'
+import { useTalkConfig } from '../store/people'
 import { storeToRefs } from 'pinia'
 
 const talkConfig = useTalkConfig()
