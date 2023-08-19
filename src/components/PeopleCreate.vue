@@ -23,7 +23,6 @@ const addPeople = () => {
       group: 'default',
       profile: ''
     })
-    newPeopleDialogShow.value = false
     newPeopleInputText.value = ''
   }
 }
