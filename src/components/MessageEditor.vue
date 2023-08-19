@@ -11,7 +11,7 @@
       {{ people.name }}
     </div>
   </div>
-  <v-text-field class="input" :label="getLabel()" @input="input" @keyup.enter="enter" @keydown="key" v-model="messageArray[messageArrayIndex]">
+  <v-text-field class="input" :label="getLabel()" @input="input" @keyup.enter="enter" @keydown="key" v-model="messageArray[messageArrayIndex].text">
   </v-text-field>
 </template>
 
