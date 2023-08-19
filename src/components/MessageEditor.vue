@@ -81,6 +81,7 @@ const pushPeopleTag = (id) => {
   messageArray.value = messageArray.value.concat([{ type: 'tag', tag: id }, { text: '' }])
   // 优化可读性导致的代码，实际上本来应该在函数运行后面执行的
   select.value = -1
+  messageArrayIndex.value = messageArray.value.length - 1
 };
 
 </script>
