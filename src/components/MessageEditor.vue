@@ -1,11 +1,5 @@
 <template>
   <SelectTalker />
-  <!-- <div class="editInput" v-for="(message, iId) in messageArray" :key="message">
-    <span :data-id="iId" class="tag" v-if="message.type == 'tag'">{{ dataArray[message.tag].name }}</span>
-    <input :data-id="iId" class="edit" type="text" v-model="message.text" @keyup.enter="inputEnter" @input="inputText"
-      @keydown="changeSelect" v-else>
-  </div>
-  <v-btn @click="sendMessage">发送</v-btn> -->
   <div class="editPeopleList" v-show="select > -1">
     <div class="item" v-for="(people, iId) in dataArray" :class="{ 'select': select == iId }" @click="pushPeopleTag(iId)">
       {{ people.name }}
