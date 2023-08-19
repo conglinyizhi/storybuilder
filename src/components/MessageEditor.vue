@@ -31,7 +31,7 @@ const getLabel = () => {
 
 // 检测用户输入 @ 后启动角色选择列表
 const input = (event) => {
-  if (event.data == '@') select.value = 1
+  if (event.data == '@') select.value = 0
 }
 // 启动角色选择列表后，用来移动光标
 const key = (event) => {
