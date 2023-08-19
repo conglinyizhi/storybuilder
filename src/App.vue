@@ -11,7 +11,7 @@
 
     <v-main>
       <v-container>
-        <message-editor @send-message="sendMessageTest" />
+        <message-editor />
         <message-show />
       </v-container>
     </v-main>
@@ -27,10 +27,6 @@ const drawer = ref(false)
 
 const hideDrawer = () => {
   drawer.value = false
-}
-
-const sendMessageTest = (data) => {
-  console.log('pushMessageTest', data);
 }
 </script>
 
