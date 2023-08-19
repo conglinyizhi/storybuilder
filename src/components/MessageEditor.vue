@@ -55,10 +55,11 @@ const key = (event) => {
 }
 
 const enter = () => {
-  if (selectedValue === 0) {
-    selectedValue = -1;
-  } else if (selectedValue > -1) {
-    pushPeopleTag(selectedValue);
+  console.log('Enter')
+  if (select === 0) {
+    select = -1;
+  } else if (select > -1) {
+    pushPeopleTag(select);
   }
 };
 
@@ -67,7 +68,7 @@ const enter = () => {
 // TODO 通过 keydown 函数判断用户所在的光标位置
 // event.target.selectionStart
 const pushPeopleTag = (id) => {
-  if (''.matchAll(/\@/).length > 1) {
+  if (''.matchAll(/\@/g).length > 1) {
     console.log('@ 数量大于1,暂时选用末尾的 @ 符号进行替换');
   }
   const lastMessage = messageArray.value[messageArray.value.length - 1];
