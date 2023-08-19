@@ -5,7 +5,8 @@
       {{ people.name }}
     </div>
   </div>
-  <v-text-field class="input" :label="getLabel()" @input="input" @keyup.enter="enter" @keydown="key" v-model="messageArray[messageArrayIndex].text">
+  <v-text-field class="input" :label="getLabel()" @input="input" @keyup.enter="enter" @keydown="key"
+    v-model="messageArray[messageArrayIndex].text">
   </v-text-field>
 </template>
 
@@ -17,7 +18,7 @@ import { storeToRefs } from 'pinia'
 
 const talkConfig = useTalkConfig()
 
-const { messageArray, dataArray, talkerId, select, messageArrayIndex } = storeToRefs(talkConfig)
+const { messageArray, dataArray, talkerId, select, messageArrayList, messageArrayIndex } = storeToRefs(talkConfig)
 
 const messageEditorIndex = ref(0)
 
@@ -54,6 +55,13 @@ const enter = () => {
     select.value = -1;
   } else if (selectId > -1) {
     pushPeopleTag(selectId);
+  } else if(messageArray.value[0].text || messageArray.value[0].type == 'tag'){
+    messageArrayList.value.push({
+      say: talkerId.value,
+      msg: messageArray.value
+    })
+    messageArrayIndex.value = 0
+    messageArray.value = [{ type: 'text', text: '' }]
   }
 };
 
