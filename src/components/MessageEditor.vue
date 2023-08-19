@@ -55,11 +55,11 @@ const key = (event) => {
 }
 
 const enter = () => {
-  console.log('Enter')
-  if (select === 0) {
-    select = -1;
-  } else if (select > -1) {
-    pushPeopleTag(select);
+  const selectId = select.value
+  if (selectId === 0) {
+    select.value = -1;
+  } else if (selectId > -1) {
+    pushPeopleTag(selectId);
   }
 };
 
