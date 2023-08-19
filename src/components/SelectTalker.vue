@@ -3,8 +3,7 @@
     当前发言角色：{{ dataArray[talkerId].name }} <v-btn @click="changeTalker = true">更换发言角色</v-btn>
   </div>
   <div v-else>
-    请选择发言对象：<v-btn v-for="(talker, iId) in dataArray" @click="changeTalkerOnClick(iId)">{{ talker.name }} - {{ iId
-    }}</v-btn>
+    请选择发言对象：<v-btn v-for="(talker, iId) in dataArray.slice(1)" @click="changeTalkerOnClick(iId+1)">{{ talker.name }}</v-btn>
     <div>或者，尝试
       <v-btn @click="showCreateView =! showCreateView">
         {{ showCreateView ? '直接关闭窗口' : '添加一个角色' }}
