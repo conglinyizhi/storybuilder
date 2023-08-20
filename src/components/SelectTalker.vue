@@ -1,13 +1,18 @@
 <template>
   <div v-if="!changeTalker">
-    当前发言角色：{{ dataArray[talkerId].name }} <v-btn @click="changeTalker = true">更换发言角色</v-btn>
+    当前发言角色：<v-chip prepend-icon="mdi-account-circle" @click="changeTalker = true">{{ dataArray[talkerId].name }}</v-chip>
   </div>
   <div v-else>
-    请选择发言对象：<v-btn v-for="(talker, iId) in dataArray.slice(1)" @click="changeTalkerOnClick(iId+1)">{{ talker.name }}</v-btn>
+    请选择发言对象：
+    <v-chip-group active-class="primary--text" column>
+      <v-chip v-for="(talker, iId) in dataArray.slice(1)" @click="changeTalkerId(iId + 1)">
+        {{ talker.name }}
+      </v-chip>
+    </v-chip-group>
     <div>或者，尝试
-      <v-btn @click="showCreateView =! showCreateView">
-        {{ showCreateView ? '直接关闭窗口' : '添加一个角色' }}
-      </v-btn>
+      <v-chip @click="showCreateView = !showCreateView">
+        {{ showCreateView ? '关闭窗口 X' : '添加角色 >' }}
+      </v-chip>
     </div>
     <div v-show="showCreateView">
       <people-create-view />
@@ -28,7 +33,7 @@ const { messageArray, dataArray, talkerId, select } = storeToRefs(talkConfig)
 const showCreateView = ref(false)
 const changeTalker = ref(false)
 
-const changeTalkerOnClick = (i) => {
+const changeTalkerId = (i) => {
   talkerId.value = i
   changeTalker.value = false
 }
