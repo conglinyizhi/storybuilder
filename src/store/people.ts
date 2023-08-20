@@ -1,7 +1,7 @@
 import { defineStore } from 'pinia'
 import { ref } from 'vue'
 
-type MessageArrayItem = { type: 'text' | 'tag', tag: number | undefined, text: string | undefined }
+type MessageArrayItem = { type: 'text' | 'tag' | 'remove', tag: number | undefined, text: string | undefined }
 
 type MessageArrayListItem = { say: number, msg: MessageArrayItem[] }
 
