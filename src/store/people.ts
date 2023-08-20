@@ -2,9 +2,10 @@ import { defineStore } from 'pinia'
 import { ref } from 'vue'
 
 type MessageArrayItem = { type: 'text' | 'tag', tag: number | undefined, text: string | undefined }
-// 定义一个类型,say is number ,msg is array<MessageArrayItem>
+
 type MessageArrayListItem = { say: number, msg: MessageArrayItem[] }
 
+type PeopleItem = { name: string, group: string, profile: string }
 
 export const useTalkConfig = defineStore('talkConfig', function () {
     const messageArray = ref([{ type: 'text', text: '' }] as MessageArrayItem[]);
@@ -18,6 +19,6 @@ export const useTalkConfig = defineStore('talkConfig', function () {
             group: 'default',
             profile: ''
         }
-    }))
+    }) as PeopleItem[]);
     return { messageArray, dataArray, talkerId, select, messageArrayList, messageArrayIndex }
 })
