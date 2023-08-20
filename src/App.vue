@@ -11,8 +11,9 @@
 
     <v-main>
       <v-container>
-        <message-editor />
         <message-show />
+        <hr />
+        <message-input-box />
         <message-show-all />
       </v-container>
     </v-main>
@@ -24,6 +25,8 @@ import { ref } from 'vue'
 import MessageEditor from './components/MessageEditor.vue';
 import MessageShow from './components/MessageShow.vue';
 import MessageShowAll from './components/MessageShowAll.vue';
+
+import MessageInputBox from './components/MessageInputBox.vue';
 
 const drawer = ref(false)
 
