@@ -19,7 +19,7 @@
 		</div>
 		<v-row justify="start">
 			<v-col cols="auto">
-				<v-chip class="pa-2 ma-2" prepend-icon="mdi-account-circle" append-icon="mdi-reload"
+				<v-chip class="my-4"  prepend-icon="mdi-account-circle" append-icon="mdi-reload"
 					@click="changeTalker = !changeTalker">
 					{{ dataArray[talkerId].name }}
 				</v-chip>
