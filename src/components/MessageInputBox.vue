@@ -1,23 +1,23 @@
 <template>
-	<div>
-		<div class="editPeopleList" v-show="select > -1">
-			<div class="item" v-for="(people, iId) in dataArray" :class="{ 'select': select == iId }"
-				@click="pushPeopleTag(iId)">
-				{{ people.name }}
+	<div class="inputBoxFather">
+		<div>
+			<div class="editPeopleList" v-show="select > -1">
+				<div class="item" v-for="(people, iId) in dataArray" :class="{ 'select': select == iId }"
+					@click="pushPeopleTag(iId)">
+					{{ people.name }}
+				</div>
 			</div>
-		</div>
-		<div name="更换对话内容角色区域" v-show="changeTalker" class="editor">
-			<v-chip-group active-class="primary-text" color="primary" column v-model="chipSelectalkerId" :readonly="true">
-				<v-chip prepend-icon="mdi-account-circle" v-for="(p, i) in dataArray.slice(1)" @click="setTalkerId(i + 1)"
-					:value="i">
-					{{ p.name }}
-				</v-chip>
-				<v-chip prepend-icon="mdi-account-plus" @click="addPeople">
-					添加角色 >
-				</v-chip>
-			</v-chip-group>
-		</div>
-		<div class="inputBoxFather">
+			<div name="更换对话内容角色区域" v-show="changeTalker" class="editor">
+				<v-chip-group active-class="primary-text" color="primary" column v-model="chipSelectalkerId" :readonly="true">
+					<v-chip prepend-icon="mdi-account-circle" v-for="(p, i) in dataArray.slice(1)" @click="setTalkerId(i + 1)"
+						:value="i">
+						{{ p.name }}
+					</v-chip>
+					<v-chip prepend-icon="mdi-account-plus" @click="addPeople">
+						添加角色 >
+					</v-chip>
+				</v-chip-group>
+			</div>
 			<v-row class="inputBoxMain">
 				<v-col cols="auto">
 					<v-chip class="my-4" prepend-icon="mdi-account-circle" append-icon="mdi-reload"
@@ -39,7 +39,7 @@
 
 <script setup>
 import SelectTalker from './SelectTalker.vue';
-import { VChipGroup, VChip, VCol } from 'vuetify/lib/components/index.mjs';
+import { VChipGroup, VChip, VCol, VScrollYReverseTransition } from 'vuetify/lib/components/index.mjs';
 import { ref } from 'vue';
 
 // import store
@@ -69,6 +69,7 @@ const addPeople = () => {
 	} else {
 		dataArray.value.push({ name: nameInput.value, group: 'default', profile: '' })
 		nameInput.value = ''
+		setTalkerId(dataArray.value.length - 1)
 	}
 }
 
