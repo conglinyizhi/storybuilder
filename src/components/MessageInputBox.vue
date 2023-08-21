@@ -69,8 +69,6 @@ const {
 const chipSelectalkerId = ref(0)
 const changeTalker = ref(false)
 
-const showCreateView = ref(false)
-
 const isTalkModeSwitch = ref(false)
 const talkModeOldSelect = ref(0)
 
