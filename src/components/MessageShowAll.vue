@@ -1,13 +1,10 @@
 <template>
-  <div>
-    全部对话内容
-    <div class="messageItem" v-for="$message in messageArrayList" v-show="$message.msg.type !== 'remove'" :key="$message">
-      <v-chip class="nameTag" prepend-icon="mdi-account-circle" closable @click:close="removeMessageById($message)">{{
-        dataArray[$message.say].name }}</v-chip>
-      <div class="editInput" v-for="message in $message.msg" :key="message">
-        <v-chip class="tag" v-if="message.type == 'tag'">{{ dataArray[message.tag].name }}</v-chip>
-        <span class="edit" v-else>{{ message.text }}</span>
-      </div>
+  <div class="messageItem" v-for="$message in messageArrayList" v-show="$message.msg.type !== 'remove'" :key="$message">
+    <v-chip class="nameTag" prepend-icon="mdi-account-circle" closable @click:close="removeMessageById($message)">{{
+      dataArray[$message.say].name }}</v-chip>
+    <div class="editInput" v-for="message in $message.msg" :key="message">
+      <v-chip class="tag" v-if="message.type == 'tag'">{{ dataArray[message.tag].name }}</v-chip>
+      <span class="edit" v-else>{{ message.text }}</span>
     </div>
   </div>
 </template>
