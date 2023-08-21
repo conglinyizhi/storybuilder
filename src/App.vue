@@ -13,6 +13,11 @@
             <v-icon>mdi-home</v-icon>
           </template>
         </v-list-item>
+        <v-list-item to="/write" title="文本生成">
+          <template v-slot:prepend>
+            <v-icon>mdi-pen</v-icon>
+          </template>
+        </v-list-item>
         <v-list-item to="/about" title="关于">
           <template v-slot:prepend>
             <v-icon>mdi-information</v-icon>
