@@ -206,13 +206,17 @@ const pushPeopleTag = (id) => {
 	left: 1rem;
 	right: 1rem;
 	z-index: 10;
-	background-color: 18,18,18;
+	background-color: rgb(18,18,18);
+	// 带颜色直线边框
+	
 }
 
 .SettingLayer {
+	border: 1px solid rgb(0, 0, 0);
 	padding: 1rem;
 	max-height: 20rem;
 	overflow-y: auto;
+	border-radius: 6px;
 }
 
 .chipGroup>* {
