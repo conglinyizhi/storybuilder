@@ -39,13 +39,6 @@ const hideDrawer = () => {
 .editInput {
   display: inline-block;
 
-  .tag {
-    padding: 5px;
-    background: darkkhaki;
-    color: black;
-    border-radius: 15px;
-  }
-
   .edit {
     border: 1px solid white;
     border-top: 0;

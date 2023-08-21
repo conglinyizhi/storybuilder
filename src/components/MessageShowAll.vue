@@ -2,9 +2,10 @@
   <div>
     全部对话内容
     <div class="messageItem" v-for="$message in messageArrayList" v-show="$message.msg.type !== 'remove'" :key="$message">
-      <v-chip prepend-icon="mdi-account-circle" closable @click:close="removeMessageById($message)">{{ dataArray[$message.say].name }}</v-chip>
+      <v-chip class="nameTag" prepend-icon="mdi-account-circle" closable @click:close="removeMessageById($message)">{{
+        dataArray[$message.say].name }}</v-chip>
       <div class="editInput" v-for="message in $message.msg" :key="message">
-        <span class="tag" v-if="message.type == 'tag'">{{ dataArray[message.tag].name }}</span>
+        <v-chip class="tag" v-if="message.type == 'tag'">{{ dataArray[message.tag].name }}</v-chip>
         <span class="edit" v-else>{{ message.text }}</span>
       </div>
     </div>
@@ -26,9 +27,17 @@ const removeMessageById = (msg) => {
 </script>
 
 <style lang="scss">
-.messageItem:hover{
-  background: darkslategrey;
-  border-radius: 1rem;
-  transition: all 0.1s;
+.messageItem {
+  margin: 1rem 0;
+
+  .nameTag {
+    margin-right: 1rem;
+  }
+
+  &:hover {
+    background: darkslategrey;
+    border-radius: 1rem;
+    transition: all 0.1s;
+  }
 }
 </style>

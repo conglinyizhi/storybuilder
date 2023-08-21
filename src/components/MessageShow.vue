@@ -3,13 +3,15 @@
     内容预览
     <span>{{ dataArray[talkerId].name }}：</span>
     <div class="editInput" v-for="message in messageArray" :key="message" @click="setEditIndex">
-      <span class="tag" v-if="message.type == 'tag'">{{ dataArray[message.tag].name }}</span>
+      <v-chip class="tag" v-if="message.type == 'tag'">{{ dataArray[message.tag].name }}</v-chip>
       <span class="edit" v-else>{{ message.text }}</span>
     </div>
   </div>
 </template>
 
 <script setup>
+import { VChip } from 'vuetify/lib/components/index.mjs';
+
 import { useTalkConfig } from '../store/people'
 import { storeToRefs } from 'pinia'
 
