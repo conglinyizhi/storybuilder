@@ -7,17 +7,19 @@
 					{{ people.name }}
 				</div>
 			</div>
-			<div name="更换对话内容角色区域" v-show="changeTalker" class="editor">
-				<v-chip-group active-class="primary-text" color="primary" column v-model="chipSelectalkerId" :readonly="true">
-					<v-chip prepend-icon="mdi-account-circle" v-for="(p, i) in dataArray.slice(1)" @click="setTalkerId(i + 1)"
-						:value="i">
-						{{ p.name }}
-					</v-chip>
-					<v-chip prepend-icon="mdi-account-plus" @click="addPeople">
-						添加角色 >
-					</v-chip>
-				</v-chip-group>
-			</div>
+			<v-scroll-y-reverse-transition>
+				<div name="更换对话内容角色区域" v-show="changeTalker" class="editor">
+					<v-chip-group active-class="primary-text" color="primary" column v-model="chipSelectalkerId" :readonly="true">
+						<v-chip prepend-icon="mdi-account-circle" v-for="(p, i) in dataArray.slice(1)" @click="setTalkerId(i + 1)"
+							:value="i">
+							{{ p.name }}
+						</v-chip>
+						<v-chip prepend-icon="mdi-account-plus" @click="addPeople">
+							添加角色 >
+						</v-chip>
+					</v-chip-group>
+				</div>
+			</v-scroll-y-reverse-transition>
 			<v-row class="inputBoxMain">
 				<v-col cols="auto">
 					<v-chip class="my-4" prepend-icon="mdi-account-circle" append-icon="mdi-reload"
