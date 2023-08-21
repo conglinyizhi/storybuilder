@@ -206,11 +206,10 @@ const pushPeopleTag = (id) => {
 	left: 1rem;
 	right: 1rem;
 	z-index: 10;
-	background-color: black;
+	background-color: 18,18,18;
 }
 
 .SettingLayer {
-	background-color: black;
 	padding: 1rem;
 	max-height: 20rem;
 	overflow-y: auto;
