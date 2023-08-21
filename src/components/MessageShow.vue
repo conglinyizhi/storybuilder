@@ -1,6 +1,7 @@
 <template>
   <div>
     <span>{{ dataArray[talkerId].name }}：</span>
+    <span v-show="messageArray.length > 3">...</span>
     <div class="editInput" v-for="(message, index) in messageArray.slice(-4)" :key="index">
       <v-chip class="tag" v-if="message.type == 'tag'">{{ dataArray[message.tag].name }}</v-chip>
       <span class="edit" v-else>{{ message.text }}</span>
