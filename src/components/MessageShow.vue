@@ -37,4 +37,5 @@ const { messageArray, dataArray, talkerId, select, messageArrayList, messageArra
   50% {
     opacity: 1;
   }
-}</style>
+}
+</style>
