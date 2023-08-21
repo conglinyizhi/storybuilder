@@ -13,7 +13,7 @@ export const useTalkConfig = defineStore('talkConfig', function () {
     const talkerId = ref(1);
     const select = ref(-1);
     const messageArrayIndex = ref(0);
-    const dataArray = ref(['[关闭]', '小丛林', '红色雨夜', '梦境引擎', '花语之鹿', '纳西妲', '提纳里', '派蒙'].map(name => {
+    const dataArray = ref(['[关闭]', '星光逐鹿', '花语之鹿', '筑梦之树', '森林意志'].map(name => {
         return {
             name,
             group: 'default',
