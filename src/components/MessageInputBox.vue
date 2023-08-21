@@ -10,7 +10,7 @@
 			<v-slide-y-reverse-transition>
 				<div class="SettingLayer" name="弹出层" v-show="changeTalker">
 					<div name="对话设置">
-						<v-switch v-model="isTalkModeSwitch" label="对话模式" color="primary"></v-switch>
+						<v-switch v-model="isTalkModeSwitch" label="对话模式（开启后在每次发送消息后都会切换为上一个角色）" color="primary"></v-switch>
 					</div>
 					<div name="更换对话内容角色区域" class="editor">
 						<v-chip-group active-class="primary-text" color="primary" column v-model="chipSelectalkerId" :readonly="true">
@@ -25,9 +25,14 @@
 					</div>
 				</div>
 			</v-slide-y-reverse-transition>
+			<v-slide-y-reverse-transition>
+				<div v-if="!changeTalker">
+					<message-show />
+				</div>
+			</v-slide-y-reverse-transition>
 			<v-row class="inputBoxMain">
 				<v-col cols="auto">
-					<v-chip class="my-4" prepend-icon="mdi-account-circle" append-icon="mdi-reload"
+					<v-chip class="my-4" prepend-icon="mdi-account-circle" :append-icon="changeTalker ? 'mdi-close' : 'mdi-menu'"
 						@click="changeTalker = !changeTalker">
 						{{ dataArray[talkerId].name }}
 					</v-chip>
@@ -42,11 +47,15 @@
 			</v-row>
 		</div>
 	</div>
+	<div name="提示层">
+		<v-chip prepend-icon="mdi-pencil" v-if="!isTalkModeSwitch">正常模式</v-chip>
+		<v-chip prepend-icon="mdi-message-text-fast" color="green" text-color="white" v-model="isTalkModeSwitch">对话模式</v-chip>
+	</div>
 </template>
 
 <script setup>
-import SelectTalker from './SelectTalker.vue';
 import { VChipGroup, VChip, VCol, VSlideYReverseTransition } from 'vuetify/lib/components/index.mjs';
+import MessageShow from './MessageShow.vue';
 import { ref } from 'vue';
 
 // import store
@@ -63,6 +72,7 @@ const changeTalker = ref(false)
 const showCreateView = ref(false)
 
 const isTalkModeSwitch = ref(false)
+const talkMode_OldSelect = ref(0)
 
 const messageEditorIndex = ref(0)
 const setTalkerId = (i) => {
@@ -127,6 +137,15 @@ const enter = () => {
 		})
 		messageArrayIndex.value = 0
 		messageArray.value = [{ type: 'text', text: '' }]
+		if (isTalkModeSwitch.value) {
+			if (talkMode_OldSelect.value == 0 || talkerId.value == talkMode_OldSelect.value) {
+				talkMode_OldSelect.value = talkerId.value
+			}else{
+				const temp = talkerId.value
+				talkerId.value = talkMode_OldSelect.value
+				talkMode_OldSelect.value = temp
+			}
+		}
 	}
 };
 

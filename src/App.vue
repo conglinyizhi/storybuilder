@@ -11,8 +11,6 @@
 
     <v-main>
       <v-container>
-        <message-show />
-        <hr />
         <message-input-box />
         <message-show-all />
       </v-container>
