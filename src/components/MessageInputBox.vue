@@ -25,11 +25,7 @@
 					</div>
 				</div>
 			</v-slide-y-reverse-transition>
-			<v-slide-y-reverse-transition>
-				<div v-if="!changeTalker">
-					<message-show />
-				</div>
-			</v-slide-y-reverse-transition>
+			<message-show />
 			<v-row class="inputBoxMain">
 				<v-col cols="auto">
 					<v-chip class="my-4" prepend-icon="mdi-account-circle" :append-icon="changeTalker ? 'mdi-close' : 'mdi-menu'"
