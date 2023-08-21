@@ -14,7 +14,8 @@
 							<v-switch v-model="isTalkModeSwitch" label="对话模式（开启后在每次发送消息后都会切换为上一个角色）" color="primary"></v-switch>
 						</div>
 						<div name="更换对话内容角色区域" class="editor">
-							<v-chip-group active-class="primary-text" color="primary" column v-model="chipSelectalkerId" :readonly="true">
+							<v-chip-group active-class="primary-text" color="primary" column v-model="chipSelectalkerId"
+								:readonly="true">
 								<v-chip prepend-icon="mdi-account-circle" v-for="(p, i) in dataArray.slice(1)" @click="setTalkerId(i + 1)"
 									:value="i">
 									{{ p.name }}
@@ -54,7 +55,7 @@
 </template>
 
 <script setup>
-import { VChipGroup, VChip, VCol, VSlideYReverseTransition,VContainer } from 'vuetify/lib/components/index.mjs';
+import { VChipGroup, VChip, VCol, VSlideYReverseTransition, VContainer } from 'vuetify/lib/components/index.mjs';
 import MessageShow from './MessageShow.vue';
 import { ref } from 'vue';
 
@@ -153,6 +154,10 @@ const enter = () => {
  * @param {number} id - 要推送的标签的ID。
  */
 const pushPeopleTag = (id) => {
+	if(id < 1){
+		select.value = -1
+		return 'Close Become 0 is not allowed'
+	}
 	if (''.matchAll(/\@/g).length > 1) {
 		console.log('@ 数量大于1,暂时选用末尾的 @ 符号进行替换');
 	}
