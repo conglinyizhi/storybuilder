@@ -1,47 +1,49 @@
 <template>
 	<div class="inputBoxFather">
-		<div>
-			<div class="editPeopleList" v-show="select > -1">
-				<div class="item" v-for="(people, iId) in dataArray" :class="{ 'select': select == iId }"
-					@click="pushPeopleTag(iId)">
-					{{ people.name }}
+		<v-container>
+			<div>
+				<div class="editPeopleList" v-show="select > -1">
+					<div class="item" v-for="(people, iId) in dataArray" :class="{ 'select': select == iId }"
+						@click="pushPeopleTag(iId)">
+						{{ people.name }}
+					</div>
 				</div>
+				<v-slide-y-reverse-transition>
+					<div class="SettingLayer" name="弹出层" v-show="changeTalker">
+						<div name="对话设置">
+							<v-switch v-model="isTalkModeSwitch" label="对话模式（开启后在每次发送消息后都会切换为上一个角色）" color="primary"></v-switch>
+						</div>
+						<div name="更换对话内容角色区域" class="editor">
+							<v-chip-group active-class="primary-text" color="primary" column v-model="chipSelectalkerId" :readonly="true">
+								<v-chip prepend-icon="mdi-account-circle" v-for="(p, i) in dataArray.slice(1)" @click="setTalkerId(i + 1)"
+									:value="i">
+									{{ p.name }}
+								</v-chip>
+								<v-chip prepend-icon="mdi-account-plus" @click="addPeople">
+									添加角色 >
+								</v-chip>
+							</v-chip-group>
+						</div>
+					</div>
+				</v-slide-y-reverse-transition>
+				<message-show />
+				<v-row class="inputBoxMain">
+					<v-col cols="auto">
+						<v-chip class="my-4" prepend-icon="mdi-account-circle" :append-icon="changeTalker ? 'mdi-close' : 'mdi-menu'"
+							@click="changeTalker = !changeTalker">
+							{{ dataArray[talkerId].name }}
+						</v-chip>
+					</v-col>
+					<v-col>
+						<v-text-field class="input" :label="getLabel()" @input="input" @keyup.enter="enter" @keydown="key"
+							v-model="messageArray[messageArrayIndex].text">
+						</v-text-field>
+					</v-col>
+					<!-- <v-col></v-col>
+					<v-col></v-col> -->
+				</v-row>
 			</div>
-			<v-slide-y-reverse-transition>
-				<div class="SettingLayer" name="弹出层" v-show="changeTalker">
-					<div name="对话设置">
-						<v-switch v-model="isTalkModeSwitch" label="对话模式（开启后在每次发送消息后都会切换为上一个角色）" color="primary"></v-switch>
-					</div>
-					<div name="更换对话内容角色区域" class="editor">
-						<v-chip-group active-class="primary-text" color="primary" column v-model="chipSelectalkerId" :readonly="true">
-							<v-chip prepend-icon="mdi-account-circle" v-for="(p, i) in dataArray.slice(1)" @click="setTalkerId(i + 1)"
-								:value="i">
-								{{ p.name }}
-							</v-chip>
-							<v-chip prepend-icon="mdi-account-plus" @click="addPeople">
-								添加角色 >
-							</v-chip>
-						</v-chip-group>
-					</div>
-				</div>
-			</v-slide-y-reverse-transition>
-			<message-show />
-			<v-row class="inputBoxMain">
-				<v-col cols="auto">
-					<v-chip class="my-4" prepend-icon="mdi-account-circle" :append-icon="changeTalker ? 'mdi-close' : 'mdi-menu'"
-						@click="changeTalker = !changeTalker">
-						{{ dataArray[talkerId].name }}
-					</v-chip>
-				</v-col>
-				<v-col>
-					<v-text-field class="input" :label="getLabel()" @input="input" @keyup.enter="enter" @keydown="key"
-						v-model="messageArray[messageArrayIndex].text">
-					</v-text-field>
-				</v-col>
-				<!-- <v-col></v-col>
-				<v-col></v-col> -->
-			</v-row>
-		</div>
+		</v-container>
 	</div>
 	<div name="提示层" class="chipGroup">
 		<v-chip prepend-icon="mdi-pencil" v-if="!isTalkModeSwitch">正常模式</v-chip>
@@ -52,7 +54,7 @@
 </template>
 
 <script setup>
-import { VChipGroup, VChip, VCol, VSlideYReverseTransition } from 'vuetify/lib/components/index.mjs';
+import { VChipGroup, VChip, VCol, VSlideYReverseTransition,VContainer } from 'vuetify/lib/components/index.mjs';
 import MessageShow from './MessageShow.vue';
 import { ref } from 'vue';
 
