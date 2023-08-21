@@ -17,21 +17,23 @@
 				</v-chip>
 			</v-chip-group>
 		</div>
-		<v-row justify="start">
-			<v-col cols="auto">
-				<v-chip class="my-4"  prepend-icon="mdi-account-circle" append-icon="mdi-reload"
-					@click="changeTalker = !changeTalker">
-					{{ dataArray[talkerId].name }}
-				</v-chip>
-			</v-col>
-			<v-col>
-				<v-text-field class="input" :label="getLabel()" @input="input" @keyup.enter="enter" @keydown="key"
-					v-model="messageArray[messageArrayIndex].text">
-				</v-text-field>
-			</v-col>
-			<!-- <v-col></v-col>
-			<v-col></v-col> -->
-		</v-row>
+		<div class="inputBoxFather">
+			<v-row class="inputBoxMain">
+				<v-col cols="auto">
+					<v-chip class="my-4" prepend-icon="mdi-account-circle" append-icon="mdi-reload"
+						@click="changeTalker = !changeTalker">
+						{{ dataArray[talkerId].name }}
+					</v-chip>
+				</v-col>
+				<v-col>
+					<v-text-field class="input" :label="getLabel()" @input="input" @keyup.enter="enter" @keydown="key"
+						v-model="messageArray[messageArrayIndex].text">
+					</v-text-field>
+				</v-col>
+				<!-- <v-col></v-col>
+				<v-col></v-col> -->
+			</v-row>
+		</div>
 	</div>
 </template>
 
@@ -157,5 +159,13 @@ const pushPeopleTag = (id) => {
 			background: aqua;
 		}
 	}
+}
+
+.inputBoxFather {
+	// 绝对定位
+	position: absolute;
+	bottom: 0;
+	left: 1rem;
+	right: 1rem;
 }
 </style>
