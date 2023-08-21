@@ -72,7 +72,7 @@ const changeTalker = ref(false)
 const showCreateView = ref(false)
 
 const isTalkModeSwitch = ref(false)
-const talkMode_OldSelect = ref(0)
+const talkModeOldSelect = ref(0)
 
 const messageEditorIndex = ref(0)
 const setTalkerId = (i) => {
@@ -125,25 +125,25 @@ const key = (event) => {
 }
 
 const enter = () => {
-	const selectalkerId = select.value
-	if (selectalkerId === 0) {
+	const selectedTalkerId = select.value;
+	if (selectedTalkerId === 0) {
 		select.value = -1;
-	} else if (selectalkerId > -1) {
-		pushPeopleTag(selectalkerId);
-	} else if (messageArray.value[0].text || messageArray.value[0].type == 'tag') {
+	} else if (selectedTalkerId > -1) {
+		pushPeopleTag(selectedTalkerId);
+	} else if (messageArray.value[0].text || messageArray.value[0].type === 'tag') {
 		messageArrayList.value.push({
 			say: talkerId.value,
-			msg: messageArray.value
-		})
-		messageArrayIndex.value = 0
-		messageArray.value = [{ type: 'text', text: '' }]
+			msg: messageArray.value,
+		});
+		messageArrayIndex.value = 0;
+		messageArray.value = [{ type: 'text', text: '' }];
 		if (isTalkModeSwitch.value) {
-			if (talkMode_OldSelect.value == 0 || talkerId.value == talkMode_OldSelect.value) {
-				talkMode_OldSelect.value = talkerId.value
-			}else{
-				const temp = talkerId.value
-				talkerId.value = talkMode_OldSelect.value
-				talkMode_OldSelect.value = temp
+			if (talkModeOldSelect.value === 0 || talkerId.value === talkModeOldSelect.value) {
+				talkModeOldSelect.value = talkerId.value;
+			} else {
+				const temp = talkerId.value;
+				talkerId.value = talkModeOldSelect.value;
+				talkModeOldSelect.value = temp;
 			}
 		}
 	}
