@@ -12,6 +12,8 @@
 					<div class="SettingLayer" name="弹出层" v-show="changeTalker">
 						<div name="对话设置">
 							<v-switch v-model="isTalkModeSwitch" label="对话模式（开启后在每次发送消息后都会切换为上一个角色）" color="primary"></v-switch>
+							<v-switch v-model="isTalkModePauseSwitch" label="对话独占模式（在对话模式开启中，发送消息后不修改发言角色，直到该模式关闭）"
+								color="primary"></v-switch>
 						</div>
 						<div name="更换对话内容角色区域" class="editor">
 							<v-chip-group active-class="primary-text" color="primary" column v-model="chipSelectalkerId"
@@ -28,6 +30,15 @@
 					</div>
 				</v-slide-y-reverse-transition>
 				<message-show />
+				<div name="提示层" class="chipGroup">
+					<v-chip prepend-icon="mdi-pencil" v-if="!isTalkModeSwitch">正常模式</v-chip>
+					<v-chip prepend-icon="mdi-message-text" color="green" text-color="white" v-show="isTalkModeSwitch">对话模式</v-chip>
+					<v-chip prepend-icon="mdi-message-text-fast" color="green" text-color="white" v-show="isTalkModeSwitch">对话等待切换：
+						<span v-text="talkModeOldSelect < 1 ? '...' : dataArray[talkModeOldSelect].name"></span>
+					</v-chip>
+					<v-chip prepend-icon="mdi-timer-stop-outline" :color="isTalkModePauseSwitch ? 'red' : ''"
+						@click="isTalkModePauseSwitch = !isTalkModePauseSwitch" v-show="isTalkModeSwitch">对话独占模式</v-chip>
+				</div>
 				<v-row class="inputBoxMain">
 					<v-col cols="auto">
 						<v-chip class="my-4" prepend-icon="mdi-account-circle" :append-icon="changeTalker ? 'mdi-close' : 'mdi-menu'"
@@ -45,12 +56,6 @@
 				</v-row>
 			</div>
 		</v-container>
-	</div>
-	<div name="提示层" class="chipGroup">
-		<v-chip prepend-icon="mdi-pencil" v-if="!isTalkModeSwitch">正常模式</v-chip>
-		<v-chip prepend-icon="mdi-message-text" color="green" text-color="white" v-show="isTalkModeSwitch">对话模式</v-chip>
-		<v-chip prepend-icon="mdi-message-text-fast" color="green" text-color="white" v-show="isTalkModeSwitch">对话等待切换：
-			{{ messageArrayIndex < 1 ? '...' : dataArray[talkModeOldSelect].name }} </v-chip>
 	</div>
 </template>
 
@@ -72,6 +77,7 @@ const changeTalker = ref(false)
 
 const isTalkModeSwitch = ref(false)
 const talkModeOldSelect = ref(0)
+const isTalkModePauseSwitch = ref(false)
 
 const messageEditorIndex = ref(0)
 const setTalkerId = (i) => {
@@ -136,7 +142,7 @@ const enter = () => {
 		});
 		messageArrayIndex.value = 0;
 		messageArray.value = [{ type: 'text', text: '' }];
-		if (isTalkModeSwitch.value) {
+		if (isTalkModeSwitch.value && !isTalkModePauseSwitch.value) {
 			if (talkModeOldSelect.value === 0 || talkerId.value === talkModeOldSelect.value) {
 				talkModeOldSelect.value = talkerId.value;
 			} else {
@@ -154,7 +160,7 @@ const enter = () => {
  * @param {number} id - 要推送的标签的ID。
  */
 const pushPeopleTag = (id) => {
-	if(id < 1){
+	if (id < 1) {
 		select.value = -1
 		return 'Close Become 0 is not allowed'
 	}
@@ -199,6 +205,8 @@ const pushPeopleTag = (id) => {
 	bottom: 0;
 	left: 1rem;
 	right: 1rem;
+	z-index: 10;
+	background-color: black;
 }
 
 .SettingLayer {
@@ -209,6 +217,6 @@ const pushPeopleTag = (id) => {
 }
 
 .chipGroup>* {
-	margin: 0.25rem;
+	margin: 0.2rem;
 }
 </style>
