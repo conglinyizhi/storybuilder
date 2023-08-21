@@ -1,7 +1,7 @@
 <template>
   <div>
     <span>{{ dataArray[talkerId].name }}：</span>
-    <div class="editInput" v-for="(message, index) in messageArray.slice(-4)" :key="index" @click="setEditIndex">
+    <div class="editInput" v-for="(message, index) in messageArray.slice(-4)" :key="index">
       <v-chip class="tag" v-if="message.type == 'tag'">{{ dataArray[message.tag].name }}</v-chip>
       <span class="edit" v-else>{{ message.text }}</span>
     </div>
@@ -18,18 +18,6 @@ import { storeToRefs } from 'pinia'
 const talkConfig = useTalkConfig()
 
 const { messageArray, dataArray, talkerId, select, messageArrayList, messageArrayIndex } = storeToRefs(talkConfig)
-
-const setEditIndex = (index) => {
-  const el = dataArray.value[index];
-  if (el.type === 'tag') {
-    return alert('暂时不可以编辑角色 tag');
-    // TODO : 编辑角色 tag 功能
-  }
-  if (el.text) {
-    messageArrayIndex.value = el;
-  }
-};
-
 </script>
 
 <style scoped lang="scss">
