@@ -1,11 +1,11 @@
 <template>
   <div>
-    内容预览
     <span>{{ dataArray[talkerId].name }}：</span>
     <div class="editInput" v-for="message in messageArray" :key="message" @click="setEditIndex">
       <v-chip class="tag" v-if="message.type == 'tag'">{{ dataArray[message.tag].name }}</v-chip>
       <span class="edit" v-else>{{ message.text }}</span>
     </div>
+    <span class="flash">_</span>
   </div>
 </template>
 
@@ -31,3 +31,20 @@ const setEditIndex = (index) => {
 };
 
 </script>
+
+<style scoped lang="scss">
+.flash{
+  // 循环展示动画
+  animation: flashAnimation 1s infinite;
+}
+
+// flashAnimation 动画
+@keyframes flashAnimation {
+  0%,100% {
+    opacity: 0;
+  }
+  50%{
+    opacity: 1;
+  }
+}
+</style>
