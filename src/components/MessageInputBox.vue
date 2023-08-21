@@ -43,9 +43,11 @@
 			</v-row>
 		</div>
 	</div>
-	<div name="提示层">
+	<div name="提示层" class="chipGroup">
 		<v-chip prepend-icon="mdi-pencil" v-if="!isTalkModeSwitch">正常模式</v-chip>
-		<v-chip prepend-icon="mdi-message-text-fast" color="green" text-color="white" v-model="isTalkModeSwitch">对话模式</v-chip>
+		<v-chip prepend-icon="mdi-message-text" color="green" text-color="white" v-show="isTalkModeSwitch">对话模式</v-chip>
+		<v-chip prepend-icon="mdi-message-text-fast" color="green" text-color="white" v-show="isTalkModeSwitch">对话等待切换：
+			{{ messageArrayIndex < 1 ? '...' : dataArray[talkModeOldSelect].name }} </v-chip>
 	</div>
 </template>
 
@@ -197,5 +199,9 @@ const pushPeopleTag = (id) => {
 	padding: 1rem;
 	max-height: 20rem;
 	overflow-y: auto;
+}
+
+.chipGroup>* {
+	margin: 0.25rem;
 }
 </style>
