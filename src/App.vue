@@ -1,18 +1,30 @@
 <template>
   <v-app>
     <v-app-bar>
-      <v-app-bar-nav-icon @click="hideDrawer"></v-app-bar-nav-icon>
+      <v-app-bar-nav-icon @click="drawer = !drawer"></v-app-bar-nav-icon>
       <v-app-bar-title>故事构建者</v-app-bar-title>
     </v-app-bar>
 
+
     <v-navigation-drawer v-model="drawer">
-      尚未用到这块区域，暂时隐藏
+      <v-list>
+        <v-list-item to="/" title="主编辑器">
+          <template v-slot:prepend>
+            <v-icon>mdi-home</v-icon>
+          </template>
+        </v-list-item>
+        <v-list-item to="/about" title="关于">
+          <template v-slot:prepend>
+            <v-icon>mdi-information</v-icon>
+          </template>
+        </v-list-item>
+      </v-list>
     </v-navigation-drawer>
+
 
     <v-main>
       <v-container>
-        <message-input-box />
-        <message-show-all />
+        <RouterView />
       </v-container>
     </v-main>
   </v-app>
@@ -20,17 +32,7 @@
 
 <script setup>
 import { ref } from 'vue'
-import MessageEditor from './components/MessageEditor.vue';
-import MessageShow from './components/MessageShow.vue';
-import MessageShowAll from './components/MessageShowAll.vue';
-
-import MessageInputBox from './components/MessageInputBox.vue';
-
 const drawer = ref(false)
-
-const hideDrawer = () => {
-  drawer.value = false
-}
 </script>
 
 <style lang="scss">

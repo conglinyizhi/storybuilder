@@ -19,14 +19,14 @@ import '@mdi/font/css/materialdesignicons.css'
 
 import {createPinia} from 'pinia'
 
-// import routes from './router.js'
+import routes from './router.js'
 
-// import {createRouter,createWebHashHistory} from 'vue-router'
+import {createRouter,createWebHashHistory} from 'vue-router'
 
-// const router = createRouter({
-//     history: createWebHashHistory(),
-//     routes,
-// })
+const router = createRouter({
+    history: createWebHashHistory(),
+    routes,
+})
 
 const vuetify = createVuetify({
   components,
@@ -56,5 +56,4 @@ const pinia = createPinia()
 
 const vueRuntimeApp = createApp(App)
 
-vueRuntimeApp.use(vuetify).use(pinia).mount('#app')
-// vueRuntimeApp.use(router)
+vueRuntimeApp.use(vuetify).use(pinia).use(router).mount('#app')
