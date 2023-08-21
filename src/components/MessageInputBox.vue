@@ -7,19 +7,24 @@
 					{{ people.name }}
 				</div>
 			</div>
-			<v-scroll-y-reverse-transition>
-				<div name="更换对话内容角色区域" v-show="changeTalker" class="editor">
-					<v-chip-group active-class="primary-text" color="primary" column v-model="chipSelectalkerId" :readonly="true">
-						<v-chip prepend-icon="mdi-account-circle" v-for="(p, i) in dataArray.slice(1)" @click="setTalkerId(i + 1)"
-							:value="i">
-							{{ p.name }}
-						</v-chip>
-						<v-chip prepend-icon="mdi-account-plus" @click="addPeople">
-							添加角色 >
-						</v-chip>
-					</v-chip-group>
+			<v-slide-y-reverse-transition>
+				<div class="SettingLayer" name="弹出层" v-show="changeTalker">
+					<div name="对话设置">
+						<v-switch v-model="isTalkModeSwitch" label="对话模式" color="primary"></v-switch>
+					</div>
+					<div name="更换对话内容角色区域" class="editor">
+						<v-chip-group active-class="primary-text" color="primary" column v-model="chipSelectalkerId" :readonly="true">
+							<v-chip prepend-icon="mdi-account-circle" v-for="(p, i) in dataArray.slice(1)" @click="setTalkerId(i + 1)"
+								:value="i">
+								{{ p.name }}
+							</v-chip>
+							<v-chip prepend-icon="mdi-account-plus" @click="addPeople">
+								添加角色 >
+							</v-chip>
+						</v-chip-group>
+					</div>
 				</div>
-			</v-scroll-y-reverse-transition>
+			</v-slide-y-reverse-transition>
 			<v-row class="inputBoxMain">
 				<v-col cols="auto">
 					<v-chip class="my-4" prepend-icon="mdi-account-circle" append-icon="mdi-reload"
@@ -41,7 +46,7 @@
 
 <script setup>
 import SelectTalker from './SelectTalker.vue';
-import { VChipGroup, VChip, VCol, VScrollYReverseTransition } from 'vuetify/lib/components/index.mjs';
+import { VChipGroup, VChip, VCol, VSlideYReverseTransition } from 'vuetify/lib/components/index.mjs';
 import { ref } from 'vue';
 
 // import store
@@ -56,6 +61,8 @@ const chipSelectalkerId = ref(0)
 const changeTalker = ref(false)
 
 const showCreateView = ref(false)
+
+const isTalkModeSwitch = ref(false)
 
 const messageEditorIndex = ref(0)
 const setTalkerId = (i) => {
@@ -170,5 +177,12 @@ const pushPeopleTag = (id) => {
 	bottom: 0;
 	left: 1rem;
 	right: 1rem;
+}
+
+.SettingLayer {
+	background-color: black;
+	padding: 1rem;
+	max-height: 20rem;
+	overflow-y: auto;
 }
 </style>
