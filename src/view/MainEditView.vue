@@ -2,7 +2,7 @@
   <message-input-box />
   <div class="messageBox">
     <message-show-all />
-    <div class="text-center">————未知的故事，等你开创新的篇章————</div>
+    <div class="text-center">——未知的故事，等你开创新的篇章——</div>
   </div>
 </template>
 
