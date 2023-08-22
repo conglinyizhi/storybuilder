@@ -1,5 +1,5 @@
 <template>
-  <message-input-box />
+  <message-input />
   <div class="messageBox">
     <message-show-all />
     <div class="text-center">——未知的故事，等你开创新的篇章——</div>
@@ -7,7 +7,7 @@
 </template>
 
 <script setup>
-import MessageInputBox from '../components/MessageInputBox.vue'
+import MessageInput from '../components/MessageInput.vue'
 import MessageShowAll from '../components/MessageShowAll.vue'
 </script>
 
