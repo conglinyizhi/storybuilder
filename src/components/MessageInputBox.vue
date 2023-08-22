@@ -139,28 +139,31 @@ const key = (event) => {
 }
 
 const enter = () => {
-	const selectedTalkerId = select.value;
-	if (selectedTalkerId === 0) {
-		select.value = -1;
-	} else if (selectedTalkerId > -1) {
-		pushPeopleTag(selectedTalkerId);
-	} else if (messageArray.value[0].text || messageArray.value[0].type === 'tag') {
-		messageArrayList.value.push({
-			say: talkerId.value,
-			msg: messageArray.value,
-		});
-		messageArrayIndex.value = 0;
-		messageArray.value = [{ type: 'text', text: '' }];
-		if (isTalkModeSwitch.value && !isTalkModePauseSwitch.value) {
-			if (talkModeOldSelect.value === 0 || talkerId.value === talkModeOldSelect.value) {
-				talkModeOldSelect.value = talkerId.value;
-			} else {
-				const temp = talkerId.value;
-				talkerId.value = talkModeOldSelect.value;
-				talkModeOldSelect.value = temp;
-			}
-		}
-	}
+  const selectedTalkerId = select.value;
+  if (selectedTalkerId === 0) {
+    select.value = -1;
+  } else if (selectedTalkerId > -1) {
+    pushPeopleTag(selectedTalkerId);
+  } else {
+    const isMessageArrayEmpty = !messageArray.value[0].text && messageArray.value[0].type !== 'tag';
+    if (isMessageArrayEmpty) {
+      messageArrayList.value.push({
+        say: talkerId.value,
+        msg: messageArray.value,
+      });
+      messageArrayIndex.value = 0;
+      messageArray.value = [{ type: 'text', text: '' }];
+      if (isTalkModeSwitch.value && !isTalkModePauseSwitch.value) {
+        if (talkModeOldSelect.value === 0 || talkerId.value === talkModeOldSelect.value) {
+          talkModeOldSelect.value = talkerId.value;
+        } else {
+          const temp = talkerId.value;
+          talkerId.value = talkModeOldSelect.value;
+          talkModeOldSelect.value = temp;
+        }
+      }
+    }
+  }
 };
 
 /**
