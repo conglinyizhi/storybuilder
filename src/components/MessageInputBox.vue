@@ -2,12 +2,21 @@
 	<div class="inputBoxFather">
 		<v-container>
 			<div>
-				<div class="editPeopleList" v-show="select > -1">
-					<div class="item" v-for="(people, iId) in dataArray" :class="{ 'select': select == iId }"
-						@click="pushPeopleTag(iId)">
-						{{ people.name }}
-					</div>
-				</div>
+				<v-slide-y-reverse-transition>
+					<v-list v-show="select > -1">
+						<v-list-item v-for="(people, iId) in dataArray" :key="iId" @click="pushPeopleTag(iId)" color="primary"
+							:title="people.name">
+							<template v-slot:prepend>
+								<v-icon :color="select == iId ? 'blue' : ''">
+									{{ select == iId ? 'mdi-arrow-right' : 'mdi-account' }}
+								</v-icon>
+							</template>
+							<template v-slot:append>
+								<v-icon v-if="select == iId" color="blue">mdi-arrow-left</v-icon>
+							</template>
+						</v-list-item>
+					</v-list>
+				</v-slide-y-reverse-transition>
 				<v-slide-y-reverse-transition>
 					<div class="SettingLayer" name="弹出层" v-show="changeTalker">
 						<div name="对话设置">
@@ -182,23 +191,6 @@ const pushPeopleTag = (id) => {
 </script>
 
 <style lang="scss">
-.editPeopleList {
-	background: darkblue;
-
-	.item {
-		font-size: 1.2rem;
-		padding: 0.5rem;
-
-		&.select {
-			background: darkcyan;
-		}
-
-		&:hover {
-			background: aqua;
-		}
-	}
-}
-
 .inputBoxFather {
 	// 绝对定位
 	position: absolute;
@@ -206,9 +198,9 @@ const pushPeopleTag = (id) => {
 	left: 1rem;
 	right: 1rem;
 	z-index: 10;
-	background-color: rgb(18,18,18);
+	background-color: rgb(18, 18, 18);
 	// 带颜色直线边框
-	
+
 }
 
 .SettingLayer {
