@@ -60,16 +60,28 @@
 							v-model="messageArray[messageArrayIndex].text">
 						</v-text-field>
 					</v-col>
-					<!-- <v-col></v-col>
-					<v-col></v-col> -->
 				</v-row>
+				<!-- <v-row class="text-center">
+					<v-col>
+						<v-icon>mdi-account-plus</v-icon>
+					</v-col>
+					<v-col>
+						<v-icon>mdi-account-plus</v-icon>
+					</v-col>
+					<v-col>
+						<v-icon>mdi-account-plus</v-icon>
+					</v-col>
+					<v-col>
+						<v-icon>mdi-account-plus</v-icon>
+					</v-col>
+				</v-row> -->
 			</div>
 		</v-container>
 	</div>
 </template>
 
 <script setup>
-import { VChipGroup, VChip, VCol, VSlideYReverseTransition, VContainer } from 'vuetify/lib/components/index.mjs';
+import { VChipGroup, VChip, VCol, VSlideYReverseTransition, VContainer, VRow } from 'vuetify/lib/components/index.mjs';
 import MessageShow from './MessageShow.vue';
 import { ref } from 'vue';
 
@@ -139,31 +151,31 @@ const key = (event) => {
 }
 
 const enter = () => {
-  const selectedTalkerId = select.value;
-  if (selectedTalkerId === 0) {
-    select.value = -1;
-  } else if (selectedTalkerId > -1) {
-    pushPeopleTag(selectedTalkerId);
-  } else {
-    const isMessageArrayEmpty = !messageArray.value[0].text && messageArray.value[0].type !== 'tag';
-    if (isMessageArrayEmpty) {
-      messageArrayList.value.push({
-        say: talkerId.value,
-        msg: messageArray.value,
-      });
-      messageArrayIndex.value = 0;
-      messageArray.value = [{ type: 'text', text: '' }];
-      if (isTalkModeSwitch.value && !isTalkModePauseSwitch.value) {
-        if (talkModeOldSelect.value === 0 || talkerId.value === talkModeOldSelect.value) {
-          talkModeOldSelect.value = talkerId.value;
-        } else {
-          const temp = talkerId.value;
-          talkerId.value = talkModeOldSelect.value;
-          talkModeOldSelect.value = temp;
-        }
-      }
-    }
-  }
+	const selectedTalkerId = select.value;
+	if (selectedTalkerId === 0) {
+		select.value = -1;
+	} else if (selectedTalkerId > -1) {
+		pushPeopleTag(selectedTalkerId);
+	} else {
+		const isMessageArrayEmpty = !messageArray.value[0].text && messageArray.value[0].type !== 'tag';
+		if (isMessageArrayEmpty) {
+			messageArrayList.value.push({
+				say: talkerId.value,
+				msg: messageArray.value,
+			});
+			messageArrayIndex.value = 0;
+			messageArray.value = [{ type: 'text', text: '' }];
+			if (isTalkModeSwitch.value && !isTalkModePauseSwitch.value) {
+				if (talkModeOldSelect.value === 0 || talkerId.value === talkModeOldSelect.value) {
+					talkModeOldSelect.value = talkerId.value;
+				} else {
+					const temp = talkerId.value;
+					talkerId.value = talkModeOldSelect.value;
+					talkModeOldSelect.value = temp;
+				}
+			}
+		}
+	}
 };
 
 /**
