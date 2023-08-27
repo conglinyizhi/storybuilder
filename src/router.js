@@ -9,6 +9,9 @@ const router = [{
 }, {
   path: '/write',
   component: () => import('./view/WriterView.vue')
+},{
+  path:'/edit_name_list',
+  component:()=> import('./view/EditNameListView.vue')
 }
 ];
 

@@ -23,6 +23,11 @@
             <v-icon>mdi-information</v-icon>
           </template>
         </v-list-item>
+        <v-list-item to="/edit_name_list" title="编辑角色">
+          <template v-slot:prepend>
+            <v-icon>mdi-pen</v-icon>
+          </template>
+        </v-list-item>
       </v-list>
     </v-navigation-drawer>
 
