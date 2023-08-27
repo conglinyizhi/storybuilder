@@ -19,7 +19,7 @@ import { VChip } from 'vuetify/lib/components/index.mjs'
 
 const talkConfig = useTalkConfig()
 
-const { messageArray, dataArray, talkerId, select, messageArrayList, messageArrayIndex } = storeToRefs(talkConfig)
+const { dataArray, messageArrayList } = storeToRefs(talkConfig)
 
 const removeMessageByIndex = (msgIndex) => {
   messageArrayList = messageArrayList.value.splice(msgIndex, 1)

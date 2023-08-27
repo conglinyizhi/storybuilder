@@ -30,7 +30,7 @@ import { VChip, VChipGroup,VBtn,VTextField } from 'vuetify/lib/components/index.
 
 const talkConfig = useTalkConfig()
 
-const { messageArray, dataArray: data, talkerId: tId, select } = storeToRefs(talkConfig)
+const { messageArray, dataArray: data, talkerId: tId } = storeToRefs(talkConfig)
 
 const showCreateView = ref(false)
 const changeTalker = ref(false)

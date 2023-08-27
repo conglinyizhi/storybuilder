@@ -18,7 +18,7 @@ import { storeToRefs } from 'pinia'
 
 const talkConfig = useTalkConfig()
 
-const { messageArray, dataArray, talkerId, select, messageArrayList, messageArrayIndex } = storeToRefs(talkConfig)
+const { messageArray, dataArray, talkerId } = storeToRefs(talkConfig)
 </script>
 
 <style scoped lang="scss">
