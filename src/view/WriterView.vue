@@ -9,7 +9,7 @@
 import { useTalkConfig } from '../store/people'
 import { storeToRefs } from 'pinia'
 
-import {ref} from 'vue'
+import { ref } from 'vue'
 
 const talkConfig = useTalkConfig()
 const { dataArray, messageArrayList } = storeToRefs(talkConfig)

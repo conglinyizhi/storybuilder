@@ -12,7 +12,7 @@ import MessageShowAll from '../components/MessageShowAll.vue'
 </script>
 
 <style scoped lang="scss">
-.messageBox{
+.messageBox {
   max-height: 70vh;
   overflow-y: auto;
   padding-bottom: 3rem;
