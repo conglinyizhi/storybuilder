@@ -23,7 +23,6 @@ const startWriter = () => {
       switch (msg.type) {
         case 'text': return msg.text
         case 'tag': return dataArray[msg.tag].name
-        case 'remove': return '';
       }
     })
     return `${name}：${sayText.join('')}`
