@@ -15,6 +15,7 @@
     <v-main>
       <v-container>
         <RouterView />
+        <AlertDialog />
       </v-container>
     </v-main>
   </v-app>
@@ -22,6 +23,7 @@
 
 <script setup>
 import LinkListItem from './components/LinkListItem.vue';
+import AlertDialog from './components/AlertDialog.vue';
 import { ref } from 'vue'
 const drawer = ref(false)
 </script>
