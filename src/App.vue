@@ -4,34 +4,14 @@
       <v-app-bar-nav-icon @click="drawer = !drawer"></v-app-bar-nav-icon>
       <v-app-bar-title>故事构建者</v-app-bar-title>
     </v-app-bar>
-
-
     <v-navigation-drawer v-model="drawer">
       <v-list>
-        <v-list-item to="/" title="主编辑器">
-          <template v-slot:prepend>
-            <v-icon>mdi-home</v-icon>
-          </template>
-        </v-list-item>
-        <v-list-item to="/write" title="文本生成">
-          <template v-slot:prepend>
-            <v-icon>mdi-pen</v-icon>
-          </template>
-        </v-list-item>
-        <v-list-item to="/about" title="关于">
-          <template v-slot:prepend>
-            <v-icon>mdi-information</v-icon>
-          </template>
-        </v-list-item>
-        <v-list-item to="/edit_name_list" title="编辑角色">
-          <template v-slot:prepend>
-            <v-icon>mdi-pen</v-icon>
-          </template>
-        </v-list-item>
+        <LinkListItem linkto="/" title="主编辑器" icon="mdi-home" />
+        <LinkListItem linkto="/write" title="文本生成" icon="mdi-pen" />
+        <LinkListItem linkto="/edit_name_list" title="编辑角色列表" icon="mdi-format-list-bulleted" />
+        <LinkListItem linkto="/about" title="关于" icon="mdi-information" />
       </v-list>
     </v-navigation-drawer>
-
-
     <v-main>
       <v-container>
         <RouterView />
@@ -41,6 +21,7 @@
 </template>
 
 <script setup>
+import LinkListItem from './components/LinkListItem.vue';
 import { ref } from 'vue'
 const drawer = ref(false)
 </script>
