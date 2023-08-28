@@ -136,13 +136,15 @@ const key = (event) => {
 }
 
 const enter = () => {
+	console.log('press enter')
 	const selectedTalkerId = select.value;
+	const isMessageArrayEmpty = messageArray.value[0].type !== 'text' || messageArray.value[0].text.trim().length > 0;
 	if (selectedTalkerId === 0) {
 		select.value = -1;
 	} else if (selectedTalkerId > -1) {
 		pushPeopleTag(selectedTalkerId);
 	} else {
-		const isMessageArrayEmpty = !messageArray.value[0].text && messageArray.value[0].type !== 'tag';
+		console.log('tag!')
 		if (isMessageArrayEmpty) {
 			messageArrayList.value.push({
 				say: talkerId.value,
