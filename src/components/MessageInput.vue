@@ -90,12 +90,12 @@ const {
 	messageArray, messageArrayIndex, messageArrayList, dataArray, talkerId, select
 } = storeToRefs(talkConfig);
 
+// Talk Mode Store
+import { useTalkModeStroe } from '../store/talkmode'
+const { isTalkModeSwitch, talkModeOldSelect, isTalkModePauseSwitch } = storeToRefs(useTalkModeStroe())
+
 const chipSelectalkerId = ref(0)
 const changeTalker = ref(false)
-
-const isTalkModeSwitch = ref(false)
-const talkModeOldSelect = ref(0)
-const isTalkModePauseSwitch = ref(false)
 
 const messageEditorIndex = ref(0)
 const setTalkerId = (i) => {
