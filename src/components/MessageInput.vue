@@ -31,9 +31,6 @@
 									:value="i">
 									{{ p.name }}
 								</v-chip>
-								<v-chip prepend-icon="mdi-account-plus" @click="addPeople">
-									添加角色 >
-								</v-chip>
 							</v-chip-group>
 						</div>
 					</div>
@@ -104,18 +101,6 @@ const messageEditorIndex = ref(0)
 const setTalkerId = (i) => {
 	talkerId.value = i;
 	changeTalker.value = false;
-}
-
-const addPeople = () => {
-	const nameInput = { value: prompt('请输入角色名称') };
-	// const nameInput = ref('');
-	if (!nameInput.value.trim()) {
-		alert('请给阁下的角色一个名字，好吗')
-	} else {
-		dataArray.value.push({ name: nameInput.value, group: 'default', profile: '' })
-		nameInput.value = ''
-		setTalkerId(dataArray.value.length - 1)
-	}
 }
 
 /**
